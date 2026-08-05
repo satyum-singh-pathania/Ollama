@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Chat Assistan</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 20px;
+      }
+      #chatbox {
+        width: 80%;
+        height: 300px;
+        overflow-y: scroll;
+        border: 1px solid #ccc;
+        margin: 50px auto;
+        padding: 10px;
+      }
+      input {
+        width: 70%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      button {
+        padding: 10px 20px;
+        margin-top: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="chatbox"></div>
+    <input type="text" id="userInput" placeholder="Type your message here..." />
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+      async function sendMessage() {
+        const userInput = document.getElementById("userInput").value;
+        if (!userInput) return;
+
+        // Display user message
+        const chatbox = document.getElementById("chatbox");
+        chatbox.innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
+        chatbox.scrollTop = chatbox.scrollHeight;
+
+        // Send message to backend AI server
+        try {
+          const response = await fetch(
+            `/chat?prompt=${encodeURIComponent(userInput)}`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ message: userInput }),
+            },
+          );
+          const data = await response.json();
+
+          // Display AI response
+          chatbox.innerHTML += `<strong>AI:</strong> ${data.response}`;
+          chatbox.scrollTop = chatbox.scrollHeight;
+        } catch (error) {
+          console.error("Error:", error);
+          chatbox.innerHTML += `<p><strong>AI:</strong> Sorry, there was an error processing your request.</p>`;
+          chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        // Clear input field
+        document.getElementById("userInput").value = "";
+      }
+    </script>
+  </body>
+</html>
