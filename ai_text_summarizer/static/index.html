@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI-Powered Text Summarizer</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+      }
+      textarea {
+        width: 80%;
+        height: 150px;
+        margin-bottom: 20px;
+        padding: 10px;
+        font-size: 16px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      #result {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        width: 80%;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <textarea
+        id="inputText"
+        placeholder="Enter the text you want to summarize..."
+      ></textarea>
+      <button onclick="summarizeText()">Summarize</button>
+      <div id="result"></div>
+    </div>
+
+    <script>
+      async function summarizeText() {
+        const inputText = document.getElementById("inputText").value;
+        const resultDiv = document.getElementById("result");
+
+        if (!inputText) {
+          resultDiv.textContent = "Please enter some text to summarize.";
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("text", inputText);
+
+        try {
+          const response = await fetch("/summarize", {
+            method: "POST",
+            body: formData,
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          resultDiv.textContent = data.summary;
+        } catch (error) {
+          console.error("Error:", error);
+          resultDiv.textContent =
+            "An error occurred while summarizing the text.";
+        }
+      }
+    </script>
+  </body>
+</html>
