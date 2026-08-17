@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Workspace</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header>
+        <h1>AI Workspace</h1>
+        <label class="model-picker">
+          Model
+          <select id="modelSelect" aria-label="Model"></select>
+        </label>
+      </header>
+
+      <nav class="tabs">
+        <button class="tab active" data-panel="chatPanel">Chat</button>
+        <button class="tab" data-panel="summarizePanel">Summarize</button>
+      </nav>
+
+      <!-- Chat: streams the reply token by token over Server-Sent Events -->
+      <section id="chatPanel" class="panel active">
+        <div id="chatLog" class="chat-log" aria-live="polite"></div>
+        <form id="chatForm" class="input-row">
+          <input
+            type="text"
+            id="chatInput"
+            placeholder="Type your message…"
+            autocomplete="off"
+          />
+          <button type="submit" id="chatSend">Send</button>
+        </form>
+      </section>
+
+      <!-- Summarize: one request, one response -->
+      <section id="summarizePanel" class="panel">
+        <textarea
+          id="summarizeInput"
+          placeholder="Paste the text you want summarized…"
+        ></textarea>
+        <button id="summarizeBtn">Summarize</button>
+        <div id="summarizeResult" class="result" hidden></div>
+      </section>
+    </main>
+
+    <script src="/static/script.js"></script>
+  </body>
+</html>

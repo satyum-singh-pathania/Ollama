@@ -1,0 +1,165 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  margin: 0;
+  background: #f2f4f7;
+  color: #1a1d21;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.app {
+  width: min(760px, 100%);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+h1 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.model-picker {
+  font-size: 0.85rem;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+select,
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.tab {
+  padding: 8px 18px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: #1f6feb;
+  border-color: #1f6feb;
+  color: #fff;
+}
+
+.panel {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.panel.active {
+  display: flex;
+}
+
+.chat-log {
+  background: #fff;
+  border: 1px solid #d0d5dd;
+  border-radius: 10px;
+  padding: 14px;
+  height: 420px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.msg {
+  max-width: 85%;
+  padding: 8px 12px;
+  border-radius: 10px;
+  white-space: pre-wrap; /* keep the model's line breaks */
+  overflow-wrap: break-word;
+}
+
+.msg.user {
+  align-self: flex-end;
+  background: #1f6feb;
+  color: #fff;
+}
+
+.msg.assistant {
+  align-self: flex-start;
+  background: #eef1f5;
+}
+
+.msg.error {
+  align-self: center;
+  background: #fdecec;
+  color: #b42318;
+  font-size: 0.9rem;
+}
+
+.input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.input-row input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+}
+
+button[type="submit"],
+#summarizeBtn {
+  padding: 10px 22px;
+  background: #1f6feb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 12px;
+  border: 1px solid #d0d5dd;
+  border-radius: 10px;
+  resize: vertical;
+}
+
+.result {
+  background: #fff;
+  border: 1px solid #d0d5dd;
+  border-radius: 10px;
+  padding: 14px;
+  white-space: pre-wrap;
+}
+
+.result.error {
+  background: #fdecec;
+  border-color: #f0b4b4;
+  color: #b42318;
+}

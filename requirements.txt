@@ -1,0 +1,13 @@
+# Shared dependencies for all projects in this repo.
+# Install with:  pip install -r requirements.txt
+
+fastapi
+uvicorn[standard]
+
+# Older projects (ai_chatbot, ai_text_summarizer)
+requests            # sync HTTP client
+python-multipart    # needed for FastAPI Form(...) fields
+
+# ai_workspace (Milestone 1)
+httpx               # async HTTP client, used to call Ollama without blocking
+pydantic-settings   # loads typed settings from .env files
