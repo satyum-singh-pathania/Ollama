@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Blog & Content Writer</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        input,
+        select,
+        button {
+          font-family: Arial, Helvetica, sans-serif;
+          padding: 10px;
+          margin: 5px;
+          width: 80%;
+        }
+        textarea {
+          font-family: Arial, Helvetica, sans-serif;
+          padding: 10px;
+          margin: 5px;
+          width: 80%;
+          border: 1px solid #ccc;
+        }
+      }
+    </style>
+    <!-- <link rel="stylesheet" href="./style.css" /> -->
+  </head>
+  <body>
+    <!-- <h1>AI Blog & Content Writer</h1> -->
+    <input
+      type="text"
+      id="topic"
+      placeholder="Enter a topic for your blog post"
+    />
+    <select id="style">
+      <option value="professional">Professional</option>
+      <option value="casual">Casual</option>
+      <option value="technical">Technical</option>
+      <option value="storytelling">Storytelling</option>
+    </select>
+    <button onClick="generateContent()">Generate Content</button>
+    <h2>Generated Content :</h2>
+    <textarea id="output" rows="10" cols="50" readonly></textarea>
+
+    <script>
+      async function generateContent() {
+        const topic = document.getElementById("topic").value;
+        const style = document.getElementById("style").value;
+        const outputArea = document.getElementById("output");
+        outputArea.value = "Generating content, please wait...";
+        if (!topic) {
+          alert("Please enter a topic.");
+          return;
+        }
+
+        let formData = new FormData();
+        formData.append("topic", topic);
+        formData.append("style", style);
+
+        const response = await fetch("/generate", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          outputArea.value = "Error generating content. Please try again.";
+          return;
+        }
+
+        const data = await response.json();
+        outputArea.value = data.content;
+      }
+    </script>
+  </body>
+</html>
