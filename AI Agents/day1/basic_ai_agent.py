@@ -21,7 +21,10 @@ prompt = PromptTemplate(
 # Function to run AI chat with memory
 def run_chain(question):
     # Retrieve past chat history
-    chat_history_text = "\n".join([f"{msg.type.capitalize()}: {msg.content}" for msg in st.session_state.chat_history.messages])
+    chat_history_text = "\n".join([
+        f"{msg.type.capitalize()}: {msg.content}"
+        for msg in st.session_state.chat_history.messages
+    ])
 
     # Run the AI response generation
     response = llm.invoke(prompt.format(chat_history=chat_history_text, question=question))
@@ -34,7 +37,13 @@ def run_chain(question):
 
 # Streamlit UI
 st.title("🤖 AI Chatbot with Memory ")
-st.write("Ask me anything!")
+# Show full chat history
+st.subheader("📜 Chat History")
+for msg in st.session_state.chat_history.messages:
+    st.write(f"**{msg.type.capitalize()}**: {msg.content}")
+
+# st.write("Ask me anything!")
+
 
 user_input = st.text_input("📝 Your Question:")
 if user_input:
@@ -42,10 +51,9 @@ if user_input:
     st.write(f"**You:** {user_input}")
     st.write(f"**AI:** {response}")
 
-# Show full chat history
-st.subheader("📜 Chat History")
-for msg in st.session_state.chat_history.messages:
-    st.write(f"**{msg.type.capitalize()}**: {msg.content}")
+
+
+
 
 
 
